@@ -1,0 +1,91 @@
+<ul class="list-group tabla-heigth overflow-auto ">
+    <li *ngFor="let item of _lista" [class.active]="item==seleccionarPaciente" (click)="EditarPaciente(item)" class="list-group-item list-group-item-action"><span class="badge badge-primary">{{item.idPaciente}}</span><strong class="mx-1">Paciente:</strong> {{item.nombre}} <strong class="mx-1"> Identidad:</strong> {{item.identificacion}}
+    </li>
+
+</ul>
+<div class="w-100 row  mt-2  ">
+    <div class="col-md-6">
+        <div class="card ">
+            <div class="card-body  was-validated ">
+                <div class="card-title">
+                    <h4 class="text-primary" *ngIf="seleccionarPaciente.idPaciente === 0">Crear nuevo paciente</h4>
+                    <h4 class="text-warning" *ngIf="seleccionarPaciente.idPaciente !== 0">Editar paciente {{seleccionarPaciente.nombre}}
+                    </h4>
+                </div>
+                <div class="form-group was-validated">
+                    <input type="text" [(ngModel)]="seleccionarPaciente.nombre" placeholder="Nombre" class="form-control mt-2" required>
+                    <div class="valid-feedback">Valido</div>
+                    <div class="invalid-feedback">Inserta un nombre válido.</div>
+                </div>
+                <div class="form-group">
+                    <input type="text" [(ngModel)]="seleccionarPaciente.identificacion" placeholder="Identificación" class="form-control mt-2" required>
+                    <div class="valid-feedback">Valido</div>
+                    <div class="invalid-feedback">Inserta la identificación.</div>
+
+                </div>
+                <div class="form-group">
+                    <input type="text" [(ngModel)]="seleccionarPaciente.edad" placeholder="Edad" class="form-control mt-2" required>
+                    <div class="valid-feedback">Valido</div>
+                    <div class="invalid-feedback">Inserta la edad</div>
+
+                </div>
+                <div class="form-group">
+                    <input type="text" [(ngModel)]="seleccionarPaciente.seguro" placeholder="Seguro" class="form-control mt-2" required>
+                    <div class="valid-feedback">Valido</div>
+                    <div class="invalid-feedback">Inserta el seguro.</div>
+                </div>
+                <div class="form-group">
+                    <input type="email" [(ngModel)]="seleccionarPaciente.correo" placeholder="Correo" class="form-control mt-2 " required>
+                    <div class="valid-feedback">Valido</div>
+                    <div class="invalid-feedback">Inserta un correo válido.</div>
+                </div>
+                <a (click)="AgregarEditar()" *ngIf="seleccionarPaciente.idPaciente === 0" class="btn btn-primary">Insertar</a>
+                <a (click)="ActualizarPaciente()" *ngIf="seleccionarPaciente.idPaciente !== 0" class="btn btn-warning">Guardar</a>
+                <a *ngIf="seleccionarPaciente.idPaciente !== 0" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter">Eliminar</a>
+
+                <a (click)="LimpiarPaciente()" *ngIf="seleccionarPaciente.idPaciente !== 0" class="btn btn-primary">Cancelar</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card ">
+            <div class="card-body  was-validated ">
+                <div class="card-title">
+                    <h4>Seleccionar Doctor</h4>
+                </div>
+                <ul class="list-group font-ul tabla-heigth overflow-auto ">
+
+                    <li *ngFor="let doctor of _listaDoctor" class="">
+                        <div class="custom-control custom-checkbox mb-3">
+                            <input type="checkbox" (change)="AgregarDoctor($event,doctor)" class="custom-control-input" id="{{doctor.idDoctor}}">
+                            <label class="custom-control-label" for="{{doctor.idDoctor}}">
+                <b class="mx-1">Nombre:</b> {{doctor.nombre}} <b class="mx-1">Especialidad:</b>
+                {{doctor.especialidad}}</label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Eliminar paciente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <h5>Eliminar paciente {{seleccionarPaciente.nombre}}</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button (click)="EliminarPaciente()" type="button" class="btn btn-danger" data-dismiss="modal">Borrar</button>
+            </div>
+        </div>
+    </div>
+</div>
